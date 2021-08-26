@@ -53,7 +53,7 @@ const app = {
         const themeChangeBtn = $('input[name="theme-change"]')
         const iTags = $$('i')
 
-        document.onkeyup = function(event) {
+        document.onkeydown = function(event) {
             buttons.forEach(function(button){
                 if (button.value === event.key) {
                     button.click()
@@ -67,7 +67,7 @@ const app = {
             const clearTrashBtn = $('.clear-history')
 
             if (isChecked && 
-                event.target.className !== 'toggle-btn-base' && 
+                event.target !== $('.toggle-btn-base') && 
                 event.target !== expandHistoryBtn && 
                 event.target.type === undefined && 
                 event.target.localName !== 'i' && 
