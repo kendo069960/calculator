@@ -11,57 +11,56 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/css/base.css">
     <link rel="stylesheet" href="./assets/css/main.css">
 </head>
 <body>
-  <div class="container">
-    <div class="calculator">
-      <div class="expression-display"></div>
-      <div class="result-display">0</div>
-      <div class="other-function">
-        <div class="theme-change">
+  <div class="container disable-dbl-tap-zoom">
+    <div class="calculator disable-dbl-tap-zoom">
+      <div class="expression-display disable-dbl-tap-zoom"></div>
+      <div class="result-display disable-dbl-tap-zoom">0</div>
+      <div class="other-function disable-dbl-tap-zoom">
+        <div class="theme-change disable-dbl-tap-zoom">
           <input type="checkbox" hidden name="theme-change" class="theme-change-input" id="theme-change">
-          <label for="theme-change" class="theme-change-btn">
-            <div class="toggle-btn-base">
+          <label for="theme-change" class="theme-change-btn disable-dbl-tap-zoom">
+            <div class="toggle-btn-base disable-dbl-tap-zoom">
             </div>
           </label>
-          <span class="theme-change-text">Swith to dark theme</span>
+          <span class="theme-change-text disable-dbl-tap-zoom">Swith to dark theme</span>
         </div>
-        <label id="history-btn" class="btn" for="history-window-checkbox">
-          <i class="fas fa-arrows-alt-v"></i>
+        <label id="history-btn" class="disable-dbl-tap-zoom btn" for="history-window-checkbox">
+          <i class="fas fa-arrows-alt-v disable-dbl-tap-zoom"></i>
         </label>
-        <div class="history">
-          <input type="checkbox" hidden name="history-window" class="history-window" id="history-window-checkbox">
-          <div class="history-wraper">
+        <div class="history disable-dbl-tap-zoom">
+          <input type="checkbox" hidden name="history-window" class="history-window disable-dbl-tap-zoom" id="history-window-checkbox">
+          <div class="history-wraper disable-dbl-tap-zoom">
             <ul id="log-history">
             </ul>
-            <span class="clear-history">
-              <i class="fas fa-trash"></i>
+            <span class="clear-history disable-dbl-tap-zoom">
+              <i class="fas fa-trash disable-dbl-tap-zoom"></i>
             </span>
           </div>
         </div>
       </div>
       <div class="buttons">
         <div class="numbers">
-          <button type="button" class="btn lg-btn function" onclick="handleCalculator.clean()" value="Delete">AC</button>
-          <button type="button" class="btn function" onclick="handleCalculator.undo()" value="Backspace">DEL</button>
-          <button type="button" class="btn operation" data-operation="+" value="+" action="sum">+</button>
-          <button type="button" class="btn number" data-number="7" value="7">7</button>
-          <button type="button" class="btn number" data-number="8" value="8">8</button>
-          <button type="button" class="btn number" data-number="9" value="9">9</button>
-          <button type="button" class="btn operation" data-operation="-" value="-" action="subtract">-</button>
-          <button type="button" class="btn number" data-number="4" value="4">4</button>
-          <button type="button" class="btn number" data-number="5" value="5">5</button>
-          <button type="button" class="btn number" data-number="6" value="6">6</button>
-          <button type="button" class="btn operation" data-operation="*" value="*" action="multiply">×</button>
-          <button type="button" class="btn number" data-number="1" value="1">1</button>
-          <button type="button" class="btn number" data-number="2" value="2">2</button>
-          <button type="button" class="btn number" data-number="3" value="3">3</button>
-          <button type="button" class="btn operation" data-operation="/" value="/" action="divide">÷</button>
-          <button type="button" class="btn number" data-number="0" value="0">0</button>
-          <button type="button" class="btn number" data-number="." value=".">.</button>
-          <button type="button" class="btn lg-btn function" onclick="handleCalculator.calculate()" value="Enter">=</button>
+          <button type="button" class="disable-dbl-tap-zoom btn lg-btn function" onclick="handleCalculator.clean()" value="Delete">AC</button>
+          <button type="button" class="disable-dbl-tap-zoom btn function" onclick="handleCalculator.undo()" value="Backspace">DEL</button>
+          <button type="button" class="disable-dbl-tap-zoom btn operation" data-operation="+" value="+" action="sum">+</button>
+          <button type="button" class="disable-dbl-tap-zoom btn number" data-number="7" value="7">7</button>
+          <button type="button" class="disable-dbl-tap-zoom btn number" data-number="8" value="8">8</button>
+          <button type="button" class="disable-dbl-tap-zoom btn number" data-number="9" value="9">9</button>
+          <button type="button" class="disable-dbl-tap-zoom btn operation" data-operation="-" value="-" action="subtract">-</button>
+          <button type="button" class="disable-dbl-tap-zoom btn number" data-number="4" value="4">4</button>
+          <button type="button" class="disable-dbl-tap-zoom btn number" data-number="5" value="5">5</button>
+          <button type="button" class="disable-dbl-tap-zoom btn number" data-number="6" value="6">6</button>
+          <button type="button" class="disable-dbl-tap-zoom btn operation" data-operation="*" value="*" action="multiply">×</button>
+          <button type="button" class="disable-dbl-tap-zoom btn number" data-number="1" value="1">1</button>
+          <button type="button" class="disable-dbl-tap-zoom btn number" data-number="2" value="2">2</button>
+          <button type="button" class="disable-dbl-tap-zoom btn number" data-number="3" value="3">3</button>
+          <button type="button" class="disable-dbl-tap-zoom btn operation" data-operation="/" value="/" action="divide">÷</button>
+          <button type="button" class="disable-dbl-tap-zoom btn number" data-number="0" value="0">0</button>
+          <button type="button" class="disable-dbl-tap-zoom btn number" data-number="." value=".">.</button>
+          <button type="button" class="disable-dbl-tap-zoom btn lg-btn function" onclick="handleCalculator.calculate()" value="Enter">=</button>
         </div>
       </div>
     </div>

@@ -38,8 +38,8 @@ const app = {
         this.history.forEach(function(item) {
             log += `
             <li>
-                <div class="previous-expression">${item.expression} = </div>
-                <div class="previous-result">${item.result}</div>
+                <span onclick="event.stopPropagation()" class="previous-expression">${item.expression} = </span>
+                <span onclick="event.stopPropagation()" class="previous-result">${item.result}</span>
             </li>
             `
         })
@@ -65,6 +65,7 @@ const app = {
             let isChecked = $('input[name="history-window"]').checked
             const expandHistoryBtn = $('#history-btn')
             const clearTrashBtn = $('.clear-history')
+
             if (isChecked && 
                 event.target.className !== 'toggle-btn-base' && 
                 event.target !== expandHistoryBtn && 
@@ -121,7 +122,15 @@ const app = {
         calculateBtn.onclick = (e) => {
             let result = resultDisplay.textContent
             if (result.includes(' ')) {
-                this.variable.calculatedResult = eval(result).toLocaleString('en')
+                let preRes = eval(result)
+                
+                if (preRes.toString().length < 15) {
+                    preRes = preRes.toLocaleString('en')
+                } else {
+                    preRes = preRes.toExponential(9)
+                }
+                
+                this.variable.calculatedResult = preRes
                 this.variable.preResult = result
                 if (this.variable.preResult != this.variable.calculatedResult) {
                     _this.history.push({ expression: this.variable.preResult, result: this.variable.calculatedResult})

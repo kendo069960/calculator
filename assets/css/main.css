@@ -46,6 +46,10 @@ body {
     /* touch-action: none; */
 }
 
+.disable-dbl-tap-zoom {
+    touch-action: manipulation;
+}
+
 .container {
     background: var(--background-color);
     display: flex;
@@ -205,6 +209,7 @@ body {
 }
 
 .previous-expression {
+    display: block;
     margin-bottom: 8px;
     font-size: 1.4rem;
     color: var(--white-color);
@@ -213,8 +218,10 @@ body {
 }
 
 .previous-result {
+    display: block;
     font-weight: 500;
     font-size: 2rem;
+    word-wrap: break-word;
 }
 
 .clear-history {
