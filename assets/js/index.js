@@ -51,7 +51,6 @@ const app = {
         const buttons = $$('button')
         const clearBtn = $('.clear-history')
         const themeChangeBtn = $('input[name="theme-change"]')
-        const iTags = $$('i')
 
         document.onkeydown = function(event) {
             buttons.forEach(function(button){
@@ -68,10 +67,12 @@ const app = {
 
             if (isChecked && 
                 event.target !== $('.toggle-btn-base') && 
-                event.target !== expandHistoryBtn && 
                 event.target.type === undefined && 
                 event.target.localName !== 'i' && 
-                event.target !== clearTrashBtn) {
+                event.target.localName !== 'label' && 
+                event.target !== expandHistoryBtn && 
+                event.target !== clearTrashBtn) 
+                {
                     expandHistoryBtn.click()
             }
         })
@@ -79,9 +80,10 @@ const app = {
         themeChangeBtn.onchange = event => {
             if (event.target.checked) {
                 document.documentElement.dataset.theme = 'dark'
-                $('.theme-change-text').textContent = 'Swith to light theme'
+                $('.theme-change-text h1').textContent = 'light'
             } else {
                 document.documentElement.dataset.theme = 'light'
+                $('.theme-change-text h1').textContent = 'dark'
             }
         }
 
