@@ -74,13 +74,11 @@ body {
     position: relative;
 }
 
-.expression-display {
-    min-height: 25px
-}
 
 .result-display {
     --height: 50px;
     font-size: 2rem;
+    padding: 0 8px;
     margin-bottom: 12px;
     border-radius: 5px;
     word-wrap: break-word;
@@ -88,14 +86,25 @@ body {
     line-height: var(--height);
     text-align: end;
 }
+.result-display.error {
+    animation: shake 0.2s ease-in-out 0s 2;
+    will-change: transform;
+    box-shadow: 0 0 1rem rgba(200 0 255 / 60%);
+}
+
+@keyframes shake {
+    0% { transform: translateX(0rem); }
+    25% { transform: translateX(0.2rem); }
+    75% { transform: translateX(-0.2rem); }
+    100% { transform: translateX(0rem); }
+  }
 
 .expression-display {
+    min-height: 25px;
     opacity: 0.8;
     font-size: 1.4rem;
 }
 
-.other-function {
-}
 
 .theme-change {
     margin: 12px;
@@ -138,10 +147,6 @@ body {
     left: 70%;
 }
 
-.theme-change-text {
-
-}
-
 .theme-change-text h1 {
     margin: 8px 8px 8px 20px;
     font-size: 1.6rem;
@@ -152,10 +157,10 @@ body {
     background-clip: border-box;
     background-size: 200% auto;
     background-clip: text;
-    text-fill-color: transparent;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: textclip 3s linear infinite;
+    will-change: background-position;
     display: inline-block;
 }
 
@@ -220,7 +225,7 @@ body {
 }
 
 #log-history > li {
-    margin-bottom: 8px;
+    margin-bottom: 20px;
 }
 
 .previous-expression {

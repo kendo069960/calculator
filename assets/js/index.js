@@ -8,25 +8,46 @@ const undoBtn = $('button[value="Backspace"]')
 const cleanBtn = $('button[value="Delete"]')
 const calculateBtn = $('button[value="Enter"]')
 const logHistory = $('#log-history')
+const listOfMathOperations = ['+', '-', '*', '/']
 
 const app = {
     history: [],
     variable: {
-        preResult: '',
+        expression: '',
         calculatedResult: '',
     },
     
     appendNumber(total, number) {
-        if (number === '.' && resultDisplay.textContent.includes('.')) {
-            return total
-        } else {
-            return total += number
+        return (total.endsWith('.') && number === '.') ? total : total += number
+    },
+
+    showThousandSeparator(exp, res) {
+        // Xu li expression
+        const splitMathOperationsArray = exp.split(/(?=[-+*/()])/)
+        splitMathOperationsArray.forEach((value, index) => {
+            splitMathOperationsArray[index] = (listOfMathOperations.includes(value[0])) ? value.trim().split(' ') : value.trim()
+        })
+        const floatConverter = [].concat(...splitMathOperationsArray)
+        floatConverter.forEach((value, index) => {
+            floatConverter[index] = (listOfMathOperations.includes(value)) ? value : new Intl.NumberFormat().format(parseFloat(value))
+        })
+
+        const handleTextExpression = floatConverter.join(' ')
+
+        // Xu li result
+        let newRes = res
+        const lengthOfNumber = 12
+        if (res === parseFloat(res) && res.toFixed().toString().length < lengthOfNumber) {
+            newRes = parseFloat(res.toFixed(lengthOfNumber - res.toFixed().toString().length))
         }
+        const handleTextResult = (newRes.toString().length < 15) ? new Intl.NumberFormat('en-US', { maximumSignificantDigits: 15, maximumFractionDigits: 9 }).format(newRes) : newRes.toExponential(9)
+
+        return { expResult: handleTextExpression, calResult: handleTextResult }
     },
 
     scrollToLast() {
-        let listHistory = logHistory.querySelectorAll("li");
-        last = listHistory[listHistory.length-1];
+        const listHistory = logHistory.querySelectorAll("li");
+        let last = listHistory[listHistory.length-1];
         last.scrollIntoView({
             behavior: 'smooth',
             block: 'end',
@@ -49,9 +70,9 @@ const app = {
     handleEvents() {
         const _this = this
         const buttons = $$('button')
-        const clearBtn = $('.clear-history')
+        const clearHistoryBtn = $('.clear-history')
         const themeChangeBtn = $('input[name="theme-change"]')
-
+        
         document.onkeydown = function(event) {
             buttons.forEach(function(button){
                 if (button.value === event.key) {
@@ -59,13 +80,13 @@ const app = {
                 }
             })
         }
-
+        
         document.addEventListener('click' , event => {
-            let isChecked = $('input[name="history-window"]').checked
+            const isInputThemeBtnChecked = $('input[name="history-window"]').checked
             const expandHistoryBtn = $('#history-btn')
             const clearTrashBtn = $('.clear-history')
 
-            if (isChecked && 
+            if (isInputThemeBtnChecked && 
                 event.target !== $('.toggle-btn-base') && 
                 event.target.type === undefined && 
                 event.target.localName !== 'i' && 
@@ -75,7 +96,12 @@ const app = {
                 {
                     expandHistoryBtn.click()
             }
+
+            if (this.history.length) {
+                this.scrollToLast()
+            }
         })
+
 
         themeChangeBtn.onchange = event => {
             if (event.target.checked) {
@@ -87,22 +113,19 @@ const app = {
             }
         }
 
-        clearBtn.onclick = () => {
-            if (this.history.length) {
-                this.scrollToLast()
-            }
+        clearHistoryBtn.onclick = () => {
             this.history = []
             this.showHistory()
         }
 
-        numberBtns.forEach((button) => {
+        numberBtns.forEach(button => {
             button.addEventListener('click', function () {
                 _this.variable.calculatedResult = _this.appendNumber(_this.variable.calculatedResult, this.value)
                 _this.render()
             })
         })
 
-        operationBtns.forEach((button) => {
+        operationBtns.forEach(button => {
             button.addEventListener('click', function () {
                 _this.variable.calculatedResult += ` ${this.value} `
                 _this.render()
@@ -116,32 +139,43 @@ const app = {
         }
 
         cleanBtn.onclick = () => {
-            this.variable.preResult = ''
+            this.variable.expression = ''
             this.variable.calculatedResult = ''
             this.render()
         }
 
         calculateBtn.onclick = (e) => {
-            let result = resultDisplay.textContent
-            if (result.includes(' ')) {
-                let preRes = eval(result)
-                
-                if (preRes.toString().length < 15) {
-                    preRes = preRes.toLocaleString('en')
-                } else {
-                    preRes = preRes.toExponential(9)
+            const expPreHandle = resultDisplay.textContent.trim()
+            
+            if (listOfMathOperations.includes(expPreHandle.charAt(0))) {
+                console.log(123)
+            }
+
+            if (expPreHandle.includes(' ')) {
+                let preRes
+                try {
+                    eval(expPreHandle)
+                } catch {
+                    resultDisplay.classList.add('error')
+                    setTimeout(() => {
+                        resultDisplay.classList.remove('error')
+                    }, 1000)
+                } finally {
+                    preRes = eval(expPreHandle)
                 }
+
+                const { expResult, calResult } = this.showThousandSeparator(expPreHandle, preRes)
                 
-                this.variable.calculatedResult = preRes
-                this.variable.preResult = result
-                if (this.variable.preResult != this.variable.calculatedResult) {
-                    _this.history.push({ expression: this.variable.preResult, result: this.variable.calculatedResult})
+                this.variable.expression = expResult
+                this.variable.calculatedResult = calResult
+
+                if (expResult != calResult) {
+                    _this.history.push({ expression: expResult, result: calResult })
                 }
             }
             this.showHistory()
             this.render()
             this.variable.calculatedResult = ''
-            this.scrollToLast()
         }
 
     },
@@ -149,7 +183,7 @@ const app = {
     render() {
         const expressionDisplay = $('.expression-display')
         resultDisplay.textContent = this.variable.calculatedResult;
-        expressionDisplay.textContent = this.variable.preResult
+        expressionDisplay.textContent = this.variable.expression
     },
     start() {
 
